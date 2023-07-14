@@ -31,7 +31,3 @@ services:
       - ./nginx:/etc/nginx/conf.d
     depends_on:
       - app
-
-  
-volumes:
-  nginx:
