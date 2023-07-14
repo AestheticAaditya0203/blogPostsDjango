@@ -6,7 +6,7 @@ services:
     ports:
       - "8000:8000"
     command:
-      "daphne -b 0.0.0.0 -p 8000 flexibees_bed.routing:application"
+      "daphne -b 0.0.0.0 -p 8000 blogPostsDjango.routing:application"
     volumes:
       - .:/usr/src/app
     depends_on:
@@ -18,7 +18,7 @@ services:
     ports:
       - "8001:8001"
     command:
-      "gunicorn --workers=2 --bind=0.0.0.0:8001 flexibees_bed.wsgi:application"
+      "gunicorn --workers=2 --bind=0.0.0.0:8001 blogPostsDjango.wsgi:application"
     volumes:
       - .:/usr/src/app
   nginx:
