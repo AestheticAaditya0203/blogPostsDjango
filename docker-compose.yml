@@ -1,0 +1,37 @@
+services:
+  app:
+    build: .
+    container_name: bed-prod-server
+    restart: always
+    ports:
+      - "8000:8000"
+    command:
+      "daphne -b 0.0.0.0 -p 8000 flexibees_bed.routing:application"
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - redis
+  gunapp:
+    build: .
+    container_name: bed-gun-prod-server
+    restart: always
+    ports:
+      - "8001:8001"
+    command:
+      "gunicorn --workers=2 --bind=0.0.0.0:8001 flexibees_bed.wsgi:application"
+    volumes:
+      - .:/usr/src/app
+  nginx:
+    image: nginx:latest
+    container_name: webserver-api-prod
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - app
+
+  
+volumes:
+  nginx:
